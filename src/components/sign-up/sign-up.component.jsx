@@ -3,55 +3,55 @@ import React from 'react';
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 
-import {auth, createUserProfileDocument} from '../../firebase/firebase.utils'
+import { auth, createUserProfileDocument } from '../../firebase/firebase.utils'
 
 import './sign-up.styles.scss';
 
 class SignUp extends React.Component {
-    constructor(){
+    constructor() {
         super();
 
         this.state = {
-            displayName:'',
-            email:'',
-            password:'',
-            confirmPassword:''
+            displayName: '',
+            email: '',
+            password: '',
+            confirmPassword: ''
         }
     }
 
     handleSubmit = async event => {
         event.preventDefault();
 
-        const {displayName,email,password,confirmPassword} = this.state;
+        const { displayName, email, password, confirmPassword } = this.state;
 
         if (password !== confirmPassword) {
             alert("passwords don't match");
             return;
-          }
+        }
 
-          try {
+        try {
 
-            const{ user } = await auth.createUserWithEmailAndPassword(email,password);
+            const { user } = await auth.createUserWithEmailAndPassword(email, password);
 
-            await createUserProfileDocument(user,{displayName});
+            await createUserProfileDocument(user, { displayName });
             this.setState({
-                displayName:'',
-                email:'',
-                password:'',
-                confirmPassword:''
+                displayName: '',
+                email: '',
+                password: '',
+                confirmPassword: ''
             })
-          } catch(error){
+        } catch (error) {
             console.log(error);
-          }
+        }
     }
     handleChange = event => {
         const { name, value } = event.target;
-    
+
         this.setState({ [name]: value });
-      };
-    render(){
-        const {displayName,email,password,confirmPassword} = this.state;
-        return(
+    };
+    render() {
+        const { displayName, email, password, confirmPassword } = this.state;
+        return (
             <div className='sign-up'>
                 <h2 className='title'>
                     I do hot have a account
@@ -103,6 +103,6 @@ class SignUp extends React.Component {
             </div>
         )
     }
-} 
+}
 
 export default SignUp;
